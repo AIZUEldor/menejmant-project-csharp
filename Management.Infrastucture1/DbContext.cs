@@ -7,7 +7,7 @@ namespace Management.Infrastucture1
     {
         public DbContext()
         {
-            this.Students = new Student[12]
+            this.Students = new Student[12];
         }
           
         public Student[] Students { get; set; }
