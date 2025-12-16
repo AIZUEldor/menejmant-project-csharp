@@ -20,7 +20,7 @@ namespace Management.Aplication.Servises
             }
             var newStudent = new Student
             {
-                id = new Random().Next(1, 1000).ToString(),
+                id = new Random().Next(1, 12).ToString(),
                 firstName = firstName,
                 lastName = lastName
             };
