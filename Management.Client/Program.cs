@@ -10,11 +10,14 @@ namespace Management.Client
 
         static void Main(string[] args)
         {
-            Console.Write("Assalomu aleyko'm xurmatli o'qituvchi :) Shaxsiy profilizga kirmoqchimisiz ? / ha / yoq : ");
+            Console.Write(" 'Kabutar' platformasiga xush kelipsiz :) Iltimos ismingizni kiriting : ");
+            string name = Console.ReadLine();
+            Console.Write($"Assalomu aleyko'm xurmatli {name} :) Shaxsiy profilizga kirmoqchimisiz ? / ha / yoq : ");
             string text = Console.ReadLine()?.ToLower();
 
             if (text == "ha")
             {
+                
                 int attempts = 0;
                 string pasword;
                 int maxAttempts = 4;
@@ -24,7 +27,7 @@ namespace Management.Client
                     if (attempts > 0)
                         Console.WriteLine($"Parolingiz xato, iltimos qaytadan kiriting : {maxAttempts} Urunishingiz qoldi :) ");
 
-                    Console.Write("Parol: ");
+                    Console.Write("Shaxsiy parolingizni kiriting : ");
                     pasword = Console.ReadLine();
                     attempts++;
                     maxAttempts--;
@@ -37,61 +40,66 @@ namespace Management.Client
 
                 } while (pasword != PASSWORD);
 
-                Console.WriteLine("Kirish muvaffaqiyatli ");
-                ShowStudents();
+                Console.WriteLine("///////////////////////////////////////////////////////////////////////////////////////");
+                Console.WriteLine($"Tabriklaymiz {name} siz muvaffaqiyatli tizimga kirdingiz :) ");
+                RunMenu();
             }
             else
             {
-                Console.WriteLine("Xayr :)");
+                Console.WriteLine("Hop . Xayr :)");
                 return;
             }
         }
 
-        public static void ShowStudents()
+        public static void RunMenu()
         {
-            Console.WriteLine("\nSalom, iltimos menyuni tanlang :\n" +
-                "1. Talaba kiritish\n" +
-                "2. O'quvchilar ro'yxati\n" +
-                "3. Qo'sha oladigan o'quvchilar soni");
+            bool continueWork = true;
 
-            string option = Console.ReadLine();
-
-            switch (option)
+            while (continueWork)
             {
-                case "1":
-                    AddStudent();
-                    break;
+                Console.WriteLine("\n Iltimos menyuni tanlang :\n" +
+                    "1. Talaba kiritish\n" +
+                    "2. O'quvchilar ro'yxati\n" +
+                    "3. Qo'sha oladigan o'quvchilar soni");
 
-                case "2":
-                    var students = studentService.GetStudents();
-                    foreach (var student in students)
-                    {
-                        if (student != null)
-                        {
-                            Console.WriteLine($"ID: {student.id}, Ismi: {student.firstName}, Familiyasi: {student.lastName}");
-                        }
-                    }
-                    break;
+                Console.Write("Tanlovingiz: ");
+                string option = Console.ReadLine();
 
-                case "3":
-                    PrintStudentCapacity();
-                    break;
+                switch (option)
+                {
+                    case "1":
+                        AddStudent();
+                        break;
 
-                default:
-                    Console.WriteLine("Noto'g'ri tanlov, iltimos qaytadan urinib ko'ring.");
-                    break;
+                    case "2":
+                        PrintAllStudents();
+                        break;
+
+                    case "3":
+                        PrintStudentCapacity();
+                        break;
+
+                    default:
+                        Console.WriteLine("Noto'g'ri tanlov.");
+                        break;
+                }
+
+                continueWork = AskToContinue();
             }
+
+            Console.WriteLine("\nDastur yakunlandi. Xayr salomat bo'ling :)");
         }
+
 
         private static void AddStudent()
         {
-            Console.Write("Iltimos talabani ismi va familiyasini kiriting :");
+            Console.WriteLine("Iltimos talabani ismi va familiyasini kiriting :");
             string firstName = Console.ReadLine();
             string lastName = Console.ReadLine();
 
             studentService.AddStudent(firstName, lastName);
 
-            Console.WriteLine("Talaba muvaffaqiyatli qo'shildi :)");
+            Console.WriteLine("Tabriklaymiz :) . Talaba muvaffaqiyatli qo'shildi :)");
         }
 
         private static void PrintAllStudents()
@@ -111,5 +119,14 @@ namespace Management.Client
             int availableSeats = studentService.GetAvailableSeats();
             Console.WriteLine($"Qo'sha oladigan o'quvchilar soni: {availableSeats}");
         }
+
+        private static bool AskToContinue()
+        {
+            Console.Write("\nYana bir amal bajarishni xohlaysizmi? (ha / yo'q): ");
+            string answer = Console.ReadLine()?.ToLower();
+
+            return answer == "ha";
+        }
+
     }
 }
