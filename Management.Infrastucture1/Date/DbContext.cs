@@ -1,7 +1,6 @@
-﻿
-using Managment.Domain.Models;
+﻿using Managment.Domain.Models;
 
-namespace Management.Infrastucture1
+namespace Management.Infrastucture1.Date
 {
     public class DbContext
     {
@@ -9,8 +8,10 @@ namespace Management.Infrastucture1
         {
             this.Students = new Student[12];
         }
-          
+
         public Student[] Students { get; set; }
+        public int StudentCount { get; set; } = 0;
+
 
 
 
